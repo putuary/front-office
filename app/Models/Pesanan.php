@@ -4,15 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\MenuDipesan;
+use App\Models\Feedback;
 
 class Pesanan extends Model
 {
     use HasFactory;
     protected $table = 'pesanan';
+    protected $primaryKey = 'id_pesanan';
 
-    public function Pesanan()
+    public function menu_dipesan()
     {
-        return $this->hasMany(MenuDipesan::class);
+        return $this->hasMany(MenuDipesan::class, 'id_pesanan');
+    }
+
+    public function feedback()
+    {
+        return $this->hasOne(Feedback::class, 'id_pesanan');
     }
 
     protected $fillable = [

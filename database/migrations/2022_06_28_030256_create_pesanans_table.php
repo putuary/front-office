@@ -16,10 +16,12 @@ return new class extends Migration
     {
         Schema::create('pesanan', function (Blueprint $table) {
             $table->id('id_pesanan');
-            $table->integer('no_meja');
+            $table->bigInteger('no_meja')->unsigned();
             $table->dateTime('waktu_pesan');
             $table->string('status');
-            $table->timestamps();    
+            $table->timestamps();
+            
+            $table->foreign('no_meja')->references('no_meja')->on('meja');
         });
     }
 

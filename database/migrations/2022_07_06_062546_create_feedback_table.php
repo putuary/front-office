@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('riwayat_transaksi', function (Blueprint $table) {
+        Schema::create('feedback', function (Blueprint $table) {
+            $table->id('id_feedback');
             $table->bigInteger('id_pesanan')->unsigned();
-            $table->bigInteger('no_meja')->unsigned();
-            $table->string('status');
+            $table->text('isi_feedback');
             $table->timestamps();
 
             $table->foreign('id_pesanan')->references('id_pesanan')->on('pesanan');
-            $table->foreign('no_meja')->references('no_meja')->on('meja');
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('riwayat_transaksi');
+        Schema::dropIfExists('feedback');
     }
 };

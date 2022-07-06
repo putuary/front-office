@@ -38,6 +38,7 @@ class MenuController extends Controller
     
     public function showtype(Request $request)
     {
+        dd($request->all());
         $kategori = $request->tipe_produk;
         $result = Menu::where('tipe_produk', $kategori)->get();
         //return single post as a resource

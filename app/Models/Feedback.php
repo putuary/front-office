@@ -4,22 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Pesanan;
 
-class MenuDipesan extends Model
+class Feedback extends Model
 {
     use HasFactory;
-    protected $table = 'menu_dipesan';
+    protected $table = 'feedback';
+    protected $primaryKey = 'id_feedback';
 
-    public function pesanan()
+    public function feedback_pesanan()
     {
         return $this->belongsTo(Pesanan::class, 'id_pesanan');
     }
 
+
+    /**
+     * fillable
+     *
+     * @var array
+     */
     protected $fillable = [
-        'id_pesanan',
-        'id_menu',
-        'jumlah',
-        'total_harga',
+        'isi_feedback',
     ];
 }
