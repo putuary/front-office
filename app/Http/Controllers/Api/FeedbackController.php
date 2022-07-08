@@ -6,6 +6,7 @@ use App\Models\Feedback;
 use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 
 class FeedbackController extends Controller
@@ -35,6 +36,15 @@ class FeedbackController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'id_pesanan'     => 'required',
+            'isi_feedback'   => 'required',
+        ]);
+
+        //check if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
         $feedback = new Feedback([
             'id_pesanan'     => $request->id_pesanan,

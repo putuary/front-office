@@ -19,6 +19,7 @@ return new class extends Migration
             $table->bigInteger('no_meja')->unsigned();
             $table->dateTime('waktu_pesan');
             $table->string('status');
+            $table->bigInteger('total_harga');
             $table->timestamps();
             
             $table->foreign('no_meja')->references('no_meja')->on('meja');

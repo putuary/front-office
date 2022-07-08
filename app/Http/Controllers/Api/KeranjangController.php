@@ -7,6 +7,7 @@ use App\Models\Meja;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\KeranjangResource;
+use Illuminate\Support\Facades\Validator;
 
 
 class KeranjangController extends Controller
@@ -33,6 +34,15 @@ class KeranjangController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'no_meja'     => 'required',
+            'id_menu'     => 'required',
+        ]);
+
+        //check if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
         $keranjang = new Keranjang([
             'no_meja'     => $request->no_meja,

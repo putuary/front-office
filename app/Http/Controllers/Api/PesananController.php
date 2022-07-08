@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Pesanan;
 use App\Models\MenuDipesan;
 use App\Models\Menu;
-use App\Models\Keranjang;
-use Illuminate\Support\Facades\DB;
+use App\Models\RiwayatTransaksi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PesananResource;
@@ -28,7 +27,7 @@ class PesananController extends Controller
         //get pesanan
         $daftar_pesanan=MenuDipesan::join('pesanan', 'menu_dipesan.id_pesanan', '=', 'pesanan.id_pesanan')
                         ->join('menu', 'menu_dipesan.id_menu', '=', 'menu.id_menu')
-                        ->select('menu_dipesan.id_pesanan','no_meja','nama_menu','harga_jual','jumlah','total_harga', 'status')->get();
+                        ->select('menu_dipesan.id_pesanan','no_meja','nama_menu','harga_jual','jumlah','harga_peritem', 'status')->get();
         #var_dump($daftar_pesanan);
 
         //return collection of posts as a resource
@@ -47,6 +46,8 @@ class PesananController extends Controller
         //define validation rules
         $validator = Validator::make($request->all(), [
             'no_meja'       => 'required',
+            'id_menu'       => 'required',
+            'jumlah'        => 'required',
         ]);
 
         //check if validation fails
@@ -60,40 +61,43 @@ class PesananController extends Controller
             'no_meja'       => $request->no_meja,
             'waktu_pesan'   => date("Y-m-d h:i:s"),
             'status'        => 'di pesan',
+            'total_harga'   => 0,
         ]);
 
-        //define validation rules
-        $validator = Validator::make($request->all(), [
-            'jumlah'  => 'required',
-        ]);
-
-        //check if validation fails
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+        $total_harga=0;
 
         for($i=0; $i<count($request->id_menu); $i++) {
-            echo $i;
             $menu=Menu::where('id_menu', $request->id_menu[$i])->get();
             
-            $total_harga[$i] = $menu[0]->harga_jual * (int)$request->jumlah[$i];
+            $harga_peritem = $menu[0]->harga_jual * (int)$request->jumlah[$i];
 
             // create pesanan
             $menu_dipesan = MenuDipesan::create([
                 'id_pesanan'    => $pesan->id_pesanan,
                 'id_menu'       => $request->id_menu[$i],
                 'jumlah'        => $request->jumlah[$i],
-                'total_harga'   => $total_harga[$i],
+                'harga_peritem'   => $harga_peritem,
             ]);
             
+            $total_harga+=$harga_peritem;
+
             $affected = Menu::where('id_menu', $request['id_menu'][$i])
                         ->update(['stok' => ($menu[0]->stok - $request['jumlah'][$i])]);
                  
         }
+        $affected = Pesanan::where('id_pesanan', $pesan->id_pesanan)
+                        ->update(['total_harga' => $total_harga]);
+        
+        $riwayat = RiwayatTransaksi::create([
+                'id_pesanan'    => $pesan->id_pesanan,
+                'status'        => 'belum dibayar',
+            ]);
+
+
         $pesanan=MenuDipesan::join('pesanan', 'menu_dipesan.id_pesanan', '=', 'pesanan.id_pesanan')
                 ->join('menu', 'menu_dipesan.id_menu', '=', 'menu.id_menu')
-                ->select('menu_dipesan.id_pesanan','no_meja','nama_menu','harga_jual','jumlah','total_harga', 'status')
-                ->where('menu_dipesan.id_pesanan', $pesan->id_pesanan,)->get();
+                ->select('menu_dipesan.id_pesanan','no_meja','nama_menu','harga_jual','jumlah','harga_peritem', 'status', 'total_harga')
+                ->where('menu_dipesan.id_pesanan', $pesan->id_pesanan)->get();
        
         //return response
         return new PesananResource(true, 'Data Pesanan Berhasil Ditambahkan!', $pesanan);
@@ -110,7 +114,7 @@ class PesananController extends Controller
     {
         $pesan=MenuDipesan::join('pesanan', 'menu_dipesan.id_pesanan', '=', 'pesanan.id_pesanan')
                 ->join('menu', 'menu_dipesan.id_menu', '=', 'menu.id_menu')
-                ->select('menu_dipesan.id_pesanan','no_meja','nama_menu','harga_jual','jumlah','total_harga', 'status')
+                ->select('menu_dipesan.id_pesanan','no_meja','nama_menu','harga_jual','jumlah','harga_peritem', 'status')
                 ->where('pesanan.id_pesanan', $pesanan->id_pesanan)->get();
         //return single post as a resource
         return new PesananResource(true, 'Data Pesanan Ditemukan!', $pesan);
@@ -120,7 +124,7 @@ class PesananController extends Controller
     {
         $pesan=MenuDipesan::join('pesanan', 'menu_dipesan.id_pesanan', '=', 'pesanan.id_pesanan')
                 ->join('menu', 'menu_dipesan.id_menu', '=', 'menu.id_menu')
-                ->select('menu_dipesan.id_pesanan','no_meja','nama_menu','harga_jual','jumlah','total_harga', 'status')
+                ->select('menu_dipesan.id_pesanan','no_meja','nama_menu','harga_jual','jumlah','harga_peritem', 'status')
                 ->where('no_meja', $request->no_meja)->get();
         // return single post as a resource
         return new PesananResource(true, 'Data Pesanan Ditemukan!', $pesan);

@@ -15,12 +15,10 @@ return new class extends Migration
     {
         Schema::create('riwayat_transaksi', function (Blueprint $table) {
             $table->bigInteger('id_pesanan')->unsigned();
-            $table->bigInteger('no_meja')->unsigned();
             $table->string('status');
             $table->timestamps();
 
             $table->foreign('id_pesanan')->references('id_pesanan')->on('pesanan');
-            $table->foreign('no_meja')->references('no_meja')->on('meja');
         });
     }
 

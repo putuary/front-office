@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\MenuDipesan;
 use App\Models\Feedback;
+use App\Models\RiwayatTransaksi;
 
 class Pesanan extends Model
 {
@@ -23,9 +24,15 @@ class Pesanan extends Model
         return $this->hasOne(Feedback::class, 'id_pesanan');
     }
 
+    public function riwayat_transaksi()
+    {
+        return $this->hasOne(RiwayatTransaksi::class, 'id_pesanan');
+    }
+
     protected $fillable = [
         'no_meja',
         'waktu_pesan',
-        'status'
+        'status',
+        'total_harga'
     ];
 }

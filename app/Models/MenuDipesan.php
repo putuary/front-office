@@ -20,6 +20,6 @@ class MenuDipesan extends Model
         'id_pesanan',
         'id_menu',
         'jumlah',
-        'total_harga',
+        'harga_peritem',
     ];
 }
