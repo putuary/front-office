@@ -29,8 +29,8 @@ class PesananController extends Controller
             ];  
         }
         $array['total_harga']=$result[0]->total_harga;
-        $array['status']=$result[0]->status;
         $array['waktu_pesan']=$result[0]->waktu_pesan;
+        $array['status']=$result[0]->status;
         return $array;
     }
 
@@ -43,6 +43,8 @@ class PesananController extends Controller
     {
         //get pesanan
         $daftar_pesanan=Pesanan::get();
+
+        dd(json_encode($this->show($daftar_pesanan[0]->id_pesanan)));
         $data=array();
         for($i=0;$i<count($daftar_pesanan);$i++) {
             array_push($data, $this->show($daftar_pesanan[$i]->id_pesanan)->resource);
@@ -77,7 +79,7 @@ class PesananController extends Controller
         //create pesanan
         $pesan = Pesanan::create([
             'no_meja'       => $request->no_meja,
-            'waktu_pesan'   => date("Y-m-d h:i:s"),
+            'waktu_pesan'   => date("Y-m-d H:i:s"),
             'status'        => 'di pesan',
             'total_harga'   => 0,
         ]);
@@ -95,7 +97,7 @@ class PesananController extends Controller
                 'id_pesanan'    => $pesan->id_pesanan,
                 'id_menu'       => $request->id_menu[$i],
                 'jumlah'        => $request->jumlah[$i],
-                'harga_peritem'   => $harga_peritem,
+                'harga_peritem' => $harga_peritem,
             ]);
             
             $total_harga+=$harga_peritem;
@@ -108,8 +110,8 @@ class PesananController extends Controller
                         ->update(['total_harga' => $total_harga]);
         
         $riwayat = RiwayatTransaksi::create([
-                'id_pesanan'    => $pesan->id_pesanan,
-                'status'        => 'belum_dibayar',
+                'id_pesanan'        => $pesan->id_pesanan,
+                'status_transaksi'  => 'belum dibayar',
             ]);
 
 

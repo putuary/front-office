@@ -45,8 +45,7 @@
       @endforeach
     </ul>
     @endif
-    <div class="bg" id="konten">
-      
+    <div class="bg" id="konten"> 
     </div>
     <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -58,6 +57,11 @@
       return new Intl.NumberFormat('id-ID',
         { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }
       ).format(money);
+    }
+
+    function kembalian(total_harga) {
+      let bayar=document.getElementById('bayar').value;
+      document.getElementById('kembalian').innerHTML= formatRupiah(bayar-total_harga);
     }
 
     getPesanan(0);
@@ -124,20 +128,21 @@
             <tbody>
               <tr>
                 <th scope="row">${formatRupiah(pesanan.total_harga)}</th>
-                <td>Rp. 50.000</td>
-                <td>Rp. 12.000</td>
+                <td><input type="number" class="form-control" id="bayar" min=${pesanan.total_harga} name="bayar" onkeyup="kembalian(${pesanan.total_harga})"></td>
+                <td id="kembalian"></td>
               </tr>
             </tbody>
           </table>
           </container>
 
-          <div class="col-12">
-            <button type="submit" class="btn btn-success">Cetak</button>
-          </div>`;
-
+          <form action="{{ route('feedback.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="col-12">
+              <button type="submit" class="btn btn-success">Cetak</button>
+            </div>
+          </form>`;
 
       document.getElementById("konten").innerHTML = text;
-
 
     } 
   </script>

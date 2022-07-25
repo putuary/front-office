@@ -33,6 +33,18 @@ Route::get('/admin/pesanan', function () {
 
 Route::get('/admin/transaksi', [TransaksiController::class, 'index'])->name('Transaksi');
 Route::get('/admin/transaksi/{no_meja}', [TransaksiController::class, 'transaksiMeja'])->name('Transaksi.Meja');
+Route::put('/admin/transaksi/{id_pesanan}', [TransaksiController::class, 'ubahStatus'])->name('Transaksi.Status');
+
+Route::get('/admin/riwayat', function () {
+    $client = new Client();
+    $request = $client->get(env('URL').'/api/riwayat_transaksi');
+    $response = json_decode($request->getBody()->getContents());
+    // dd($response->data);
+    $data=$response->data;
+
+    //return collection of posts as a resource
+    return view('admin.riwayat_transaksi', ['data' => $data]);
+})->name('RiwayatTransaksi');
 
 Route::get('/', [MenuController::class, 'index'])->name('katalog');
 Route::get('/promo', [MenuController::class, 'promo'])->name('promo');
