@@ -36,7 +36,7 @@
                         <a class="nav-link" href="/feedback" tabindex="-1" aria-disabled="true">Feedback</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/meja" tabindex="-1" aria-disabled="true">1</a>
+                        <a class="nav-link" href="/meja" tabindex="-1" aria-disabled="true"><span class="iconify" data-icon="ic:baseline-table-restaurant" style="color: #699bf7;"></span> Meja 1</a>
                     </li>
                 </ul>
             </div>
