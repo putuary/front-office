@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
+use \Config;
 
 
 class LoginController extends Controller
@@ -32,7 +33,9 @@ class LoginController extends Controller
 
      public function store(Request $request)
     {
-        dd($request->all());
+       	
+        Config::set('global.no_meja', $request->no_meja);
+        dd(Config::get('global.no_meja'));
         return redirect()->route('katalog');
     }
         

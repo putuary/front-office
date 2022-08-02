@@ -18,6 +18,8 @@ class RiwayatTransaksi extends Model
 
     protected $fillable = [
         'id_pesanan',
+        'uang_bayar',
+        'uang_kembalian',
         'status_transaksi',
     ];
 }

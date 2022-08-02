@@ -40,7 +40,7 @@ class PesananController extends Controller
     public function store(Request $request)
     {
          #dd($request->all());
-         $c=array( $request->all());
+         #$c=array( $request->all());
          #unset($c['_token']);
          #dd($c);
          $array=array('no_meja' => $request->no_meja);
@@ -57,6 +57,7 @@ class PesananController extends Controller
              );
         
         $data=json_decode($response->getBody()->getContents())->data;
+
 
         for($i=0; $i<count($request->id_menu);$i++) {
             $response=$client->request('DELETE',env('URL').'/api/keranjang',

@@ -34,13 +34,12 @@
         <div class="row">
           <?php foreach ($data as $array) { ?>
               <div class="col-1">
-                <div class="box">
+                
                   <form action="{{ route('login.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                       <input type="text" class="form-control" id="exampleInputText" aria-describedby="TextHelp" value={{ $array->no_meja }} name="no_meja" style='display:none'>
-                      <button>{{ $array->no_meja }}</button>
-                  </form> 
-                  </div>
+                      <div class="box"><button >{{ $array->no_meja }}</button></div>
+                  </form>
               </div>
           <?php } ?>
         </div>

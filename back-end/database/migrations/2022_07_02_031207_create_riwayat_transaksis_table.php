@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('riwayat_transaksi', function (Blueprint $table) {
             $table->bigInteger('id_pesanan')->unsigned();
+            $table->integer('uang_bayar');
+            $table->integer('uang_kembalian');
             $table->string('status_transaksi');
             $table->timestamps();
 
