@@ -31,7 +31,7 @@
                 <td><input type="number" class="form-control"  value={{$array->id_menu}} name="id_menu[{{ $i }}]" style='display:none'></td>
                 <td style="width: 15%">{{ $array->nama_menu }} <br> {{ rupiah($array->harga_jual) }}</td>
                 <td style="width: 1%"><input type="number" min="1" max={{ $array->stok }} value=1 name="jumlah[{{ $i }}]"></td>
-                <td><button type="button" onclick="hapus({{ $array->id_menu }})">hapus</button></td>
+                <td><button type="button" class="btn btn-danger" onclick="hapus({{ $array->id_menu }})">hapus</button></td>
               </tr>
           
             <?php $i++; } ?>

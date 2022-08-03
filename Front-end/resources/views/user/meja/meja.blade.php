@@ -34,21 +34,23 @@
         <div class="row">
           <?php foreach ($data as $array) { ?>
               <div class="col-1">
-                
-                  <form action="{{ route('login.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                      <input type="text" class="form-control" id="exampleInputText" aria-describedby="TextHelp" value={{ $array->no_meja }} name="no_meja" style='display:none'>
-                      <div class="box"><button >{{ $array->no_meja }}</button></div>
-                  </form>
+                    <div class="box"><button onclick="setmeja({{ $array->no_meja }})">{{ $array->no_meja }}</button></div>
               </div>
           <?php } ?>
         </div>
       </div>
     </div>
-  </body>
-  <script
+    <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"
   ></script>
+  <script>
+    function setmeja(no_meja) {
+      window.localStorage.setItem('no_meja', no_meja);
+      window.location.href = `{{ env('APP_URL') }}`;
+    }
+  </script>
+
+  </body>
 </html>

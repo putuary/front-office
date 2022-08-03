@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Models\Pesanan;
 use App\Models\MenuDipesan;
@@ -11,26 +11,7 @@ use GuzzleHttp\Client;
 
 
 class PesananController extends Controller
-{    
-    
-
-    /**
-     * index
-     *
-     * @return void
-     */
-    public function index()
-    {
-        //get pesanan
-        $daftar_pesanan=MenuDipesan::join('pesanan', 'menu_dipesan.id_pesanan', '=', 'pesanan.id_pesanan')
-                        ->join('menu', 'menu_dipesan.id_menu', '=', 'menu.id_menu')
-                        ->select('menu_dipesan.id_pesanan','no_meja','nama_menu','harga_jual','jumlah','harga_peritem', 'status')->get();
-        #var_dump($daftar_pesanan);
-
-        //return collection of posts as a resource
-        return new PesananResource(true, 'List Data Pesanan', $daftar_pesanan);
-    }
-    
+{ 
     /**
      * store
      *
@@ -73,28 +54,5 @@ class PesananController extends Controller
          
          return view('user.rincian', ['data' => $data]);
     }
-    
-        
-    /**
-     * show
-     *
-     * @param  mixed $post
-     * @return void
-     */
-    public function show()
-    {
-       
-    }
-
-    public function showPesananMeja(Request $request)
-    {
-        $pesan=MenuDipesan::join('pesanan', 'menu_dipesan.id_pesanan', '=', 'pesanan.id_pesanan')
-                ->join('menu', 'menu_dipesan.id_menu', '=', 'menu.id_menu')
-                ->select('menu_dipesan.id_pesanan','no_meja','nama_menu','harga_jual','jumlah','harga_peritem', 'status')
-                ->where('no_meja', $request->no_meja)->get();
-        // return single post as a resource
-        return new PesananResource(true, 'Data Pesanan Ditemukan!', $pesan);
-    }
-   
     
 }

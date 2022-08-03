@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -8,7 +8,7 @@ use GuzzleHttp\Client;
 use \Config;
 
 
-class LoginController extends Controller
+class LoginMejaController extends Controller
 {    
     /**
      * index

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
-
+use Illuminate\Support\Facades\Redirect;
 
 class FeedbackController extends Controller
 {    
@@ -17,7 +17,12 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        return view('user.feedback', ['data' => ['success' => false]]);
+        $client = new Client();
+        $request = $client->get(env('URL').'/api/pesanan/showpesananmeja/2');
+        $response = json_decode($request->getBody()->getContents());
+        #dd($response);
+        $data=$response->data;
+        return view('user.feedback.feedback', ['data' => $data]);
     }
     
     /**
@@ -33,13 +38,18 @@ class FeedbackController extends Controller
         $response=$client->post(env('URL').'/api/feedback',
                 array(
                     'form_params' => array(
-                        'id_pesanan' => 1,
+                        'id_pesanan' => $request->id_pesanan,
                         'isi_feedback' => $request->isi_feedback,
                     )
                 )
             );
         $data=json_decode($response->getBody()->getContents())->message;
         
-        return view('user.feedback', ['data' => ['success' => true , 'message' => $data]]);
+        return redirect('/feedback');
+    }
+
+    public function tambah_feedback($id_pesanan)
+    {
+        return view('user.feedback.feedback_pesanan', ['id_pesanan' => $id_pesanan]);
     }
 }

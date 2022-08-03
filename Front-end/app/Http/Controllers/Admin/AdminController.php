@@ -43,7 +43,7 @@ class AdminController extends Controller
         return view('admin.transaksi.daftar_transaksi', ['data' => $data]);
     }
 
-    public function transaksi_meja()
+    public function transaksi_meja($no_meja)
     {
         $client = new Client();
         $request = $client->get(env('URL').'/api/pesanan/showpesananmeja/'.$no_meja);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Models\Keranjang;
 use Illuminate\Http\Request;
@@ -11,20 +11,6 @@ use GuzzleHttp\Client;
 
 class KeranjangController extends Controller
 {    
-    /**
-     * index
-     *
-     * @return void
-     */
-    public function index()
-    {
-        //get posts
-        $keranjang = Keranjang::latest()->paginate(5);
-
-        //return collection of posts as a resource
-        return new KeranjangResource(true, 'List Data Keranjang', $keranjang);
-    }
-    
     /**
      * store
      *
@@ -63,22 +49,5 @@ class KeranjangController extends Controller
         $data=$response->data;
 
         return view('user.keranjang', ['data' => $data]);
-    }
-    
-    /**
-     * destroy
-     *
-     * @param  mixed $post
-     * @return void
-     */
-    public function destroy(Request $request)
-    {
-
-        //delete menu dari keranjang
-        $delete = Keranjang::where('no_meja', $request->no_meja)
-                ->where('id_menu', $request->id_menu)->delete();
-
-        //return response
-        return new KeranjangResource(true, 'Menu Berhasil Dihapus dari keranjang!', $delete);
     }
 }

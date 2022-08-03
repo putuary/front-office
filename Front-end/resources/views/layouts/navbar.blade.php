@@ -36,10 +36,11 @@
                         <a class="nav-link" href="/feedback" tabindex="-1" aria-disabled="true">Feedback</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/meja" tabindex="-1" aria-disabled="true"><span class="iconify" data-icon="ic:baseline-table-restaurant" style="color: #699bf7;"></span> Meja 1</a>
+                        <a class="nav-link" href="/meja" tabindex="-1" aria-disabled="true"><span class="iconify" data-icon="ic:baseline-table-restaurant" style="color: #699bf7;"></span> Meja <span id="meja"></span></div> </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+    <script> document.getElementById("meja").innerHTML=window.localStorage.getItem('no_meja')</script>
 </header>

@@ -4,11 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Login\LoginController;
 use App\Http\Controllers\Admin\Login\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\MejaController;
+use App\Http\Controllers\User\MejaController;
+use App\Http\Controllers\User\LoginMejaController ;
 use App\Http\Controllers\User\MenuController;
-use App\Http\Controllers\KeranjangController;
-use App\Http\Controllers\PesananController;
-use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\User\KeranjangController;
+use App\Http\Controllers\User\PesananController;
+use App\Http\Controllers\User\FeedbackController;
 use GuzzleHttp\Client;
 
 /*
@@ -46,6 +47,7 @@ Route::get('/minuman', [MenuController::class, 'minuman'])->name('minuman');
 Route::get('/dessert', [MenuController::class, 'dessert'])->name('dessert');
 
 Route::resource('/meja', MejaController::class);
+Route::resource('/login', LoginMejaController::class);
 
 
 Route::get('/fasilitas', function () {
@@ -70,8 +72,9 @@ Route::get('/detail', function () {
     return view('user.detail', ['data' => $data]);
 });
 
-
-Route::resource('/feedback', FeedbackController::class);
+Route::get('/feedback', [FeedbackController::class, 'index']);
+Route::get('/feedback/{id_pesanan}', [FeedbackController::class, 'tambah_feedback']);
+Route::post('/feedback', [FeedbackController::class, 'store']);
 
 Route::resource('/keranjang', KeranjangController::class);
 Route::delete('/keranjang',[KeranjangController::class, 'destroy']);

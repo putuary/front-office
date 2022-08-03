@@ -28,15 +28,12 @@
             <div class="col-12">
               <form action="{{ route('keranjang.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="number" class="form-control" id="exampleInputText" aria-describedby="TextHelp" value='2' name="no_meja" style='display:none'>
+                <input type="number" class="form-control" id="no_meja" aria-describedby="TextHelp" value='0' name="no_meja" style='display:none'>
                 <input type="number" class="form-control" id="exampleInputText" aria-describedby="TextHelp" value={{ $data->id_menu }} name="id_menu" style='display:none'>
                 <div class="tmbol"><button class="btn btn-success float-first px-5">
                     Masukkan Keranjang
                   </button>
               </form>
-              <a href="memesan.html"><button class="btn btn-success float-end px-5">
-                  Pesan
-                </button></a>
             </div>
           </div>
         </div>
@@ -47,6 +44,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
   </script>
   <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+  <script>
+
+  </script>
 </body>
 
 </html>

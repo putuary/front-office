@@ -44,6 +44,7 @@ class PesananController extends Controller
         //get pesanan
         $daftar_pesanan=Pesanan::get();
 
+        #dd(json_encode($this->show($daftar_pesanan[0]->id_pesanan)));
         $data=array();
         for($i=0;$i<count($daftar_pesanan);$i++) {
             array_push($data, $this->show($daftar_pesanan[$i]->id_pesanan)->resource);
@@ -110,9 +111,9 @@ class PesananController extends Controller
         
         $riwayat = RiwayatTransaksi::create([
                 'id_pesanan'        => $pesan->id_pesanan,
-                'uang_bayar'        =>0,
-                'uang_kembalian'    =>0,
-                'status_transaksi'  => 'belum dibayar',
+                'uang_bayar'        => 0,
+                'uang_kembalian'    => 0,
+                'status_transaksi'  => 'Belum dibayar',
             ]);
 
 
@@ -142,7 +143,7 @@ class PesananController extends Controller
         #echo(count($pesan));
         #dd($pesan);
         if(count($pesan)==0) {
-            $pesanan=Pesanan::where('id_pesanan', $id_pesanan)->get()->toArray();
+            $pesanan=Pesanan::where('id_pesanan', $id_pesanan)->get();
         }
         else {
             $pesanan=$this->ubahArray($pesan);
@@ -152,31 +153,22 @@ class PesananController extends Controller
 
     public function showstatus(Request $request)
     {
-        $result =Pesanan::where('status', $request->status)->get()->toArray();
+        $result =Pesanan::where('status', $request->status)->get();
         //return single post as a resource
         
-        
-        
-        // $data=array();
+        $data=array();
         for($i=0;$i<count($result);$i++) {
-            $data_pesanan=$this->show($result[$i]['id_pesanan'])->resource;
-            $result[$i] = $data_pesanan;
-            // dd($data_pesanan->resource);
-            // if(count($data_pesanan->resource)>0) {
-            //     array_push($result[$i]['menu_dipesan'], $data_pesanan->resource);
-            // }
-            
+            array_push($data, $this->show($result[$i]->id_pesanan)->resource);
         }
         
-        //dd($result);
-        
-        return new PesananResource(true, 'Data Menu Ditemukan!', $result);
+        return new PesananResource(true, 'Data Menu Ditemukan!', $data);
     }
 
     public function showPesananMeja($no_meja)
     {
         $result=Pesanan::where('no_meja', $no_meja)
-                ->where('status', '!=', 'selesai')->get();
+                ->join('riwayat_transaksi', 'pesanan.id_pesanan', '=', 'riwayat_transaksi.id_pesanan')
+                ->where('status_transaksi', '!=', 'Lunas')->get();
 
         $data=array();
         for($i=0;$i<count($result);$i++) {
@@ -197,7 +189,17 @@ class PesananController extends Controller
         return response()->json([
             'message' => 'Daftar Meja yang memesan',
             'data'    => $result,
-        ]);
-       
+        ]);   
     }
+    
+    // public function pesanan_feedback($no_meja) {
+    //     $result=Pesanan::where('no_meja', $no_meja)
+    //             ->where('status', '=', 'selesai')->get();
+
+    //     $data=array();
+    //     for($i=0;$i<count($result);$i++) {
+    //        array_push($data, $this->show($result[$i]->id_pesanan)->resource);
+    //     }
+    //     return $data;
+    // }
 }

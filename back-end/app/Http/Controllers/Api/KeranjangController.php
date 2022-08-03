@@ -36,7 +36,7 @@ class KeranjangController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'no_meja'     => 'required',
-            'id_menu'     => 'required',
+            'id_menu'     => 'required|unique:keranjang',
         ]);
 
         //check if validation fails
