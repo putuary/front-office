@@ -28,7 +28,7 @@
             <div class="col-12">
               <form action="{{ route('keranjang.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="number" class="form-control" id="no_meja" aria-describedby="TextHelp" value='0' name="no_meja" style='display:none'>
+                <input type="number" class="form-control" id="no_meja" aria-describedby="TextHelp" name="no_meja" style='display:none'>
                 <input type="number" class="form-control" id="exampleInputText" aria-describedby="TextHelp" value={{ $data->id_menu }} name="id_menu" style='display:none'>
                 <div class="tmbol"><button class="btn btn-success float-first px-5">
                     Masukkan Keranjang
@@ -45,7 +45,7 @@
   </script>
   <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
   <script>
-
+    document.getElementById('no_meja').setAttribute('value', val);
   </script>
 </body>
 

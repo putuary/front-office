@@ -62,4 +62,13 @@ class MenuController extends Controller
         $data=$response->data;
         return view('user.katalog', ['data' => $data]);
     }
+
+    public function detail($id_menu)
+    {
+        $client = new Client();
+        $request = $client->get(env('URL').'/api/menu/'.$id_menu);
+        $response = json_decode($request->getBody()->getContents());
+        $data=$response->data;
+        return view('user.detail', ['data' => $data]);
+    }
 }

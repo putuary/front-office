@@ -54,5 +54,15 @@ class PesananController extends Controller
          
          return view('user.rincian', ['data' => $data]);
     }
+
+    public function riwayat($no_meja)
+    {
+        $client = new Client();
+        $request = $client->get(env('URL').'/api/pesanan/showpesananmeja/'.$no_meja);
+        $response = json_decode($request->getBody()->getContents());
+        #dd($response);
+        $data=$response->data;
+        return view('user.riwayat', ['data' => $data]);
+    }
     
 }

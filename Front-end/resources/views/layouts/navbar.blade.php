@@ -24,10 +24,10 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/keranjang/2">Keranjang</a>
+                        <a class="nav-link" id="link_keranjang">Keranjang</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/riwayat" tabindex="-1" aria-disabled="true">Riwayat</a>
+                        <a class="nav-link" id="link_riwayat" tabindex="-1" aria-disabled="true">Riwayat</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/fasilitas" tabindex="-1" aria-disabled="true">Fasilitas</a>
@@ -42,5 +42,10 @@
             </div>
         </div>
     </nav>
-    <script> document.getElementById("meja").innerHTML=window.localStorage.getItem('no_meja')</script>
+    <script> 
+        let val=window.localStorage.getItem('no_meja');
+        document.getElementById('link_keranjang').setAttribute('href', `/keranjang/${val}`);
+        document.getElementById('link_riwayat').setAttribute('href', `/riwayat/${val}`);
+        document.getElementById("meja").innerHTML=window.localStorage.getItem('no_meja');
+    </script>
 </header>

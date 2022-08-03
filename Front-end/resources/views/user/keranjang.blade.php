@@ -21,7 +21,7 @@
     @include('layouts.navbar')
       <form action="{{ route('pesanan.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <input type="number" class="form-control" id="no_meja" value='2' name="no_meja" style='display:none'>
+        <input type="number" class="form-control" id="no_meja" name="no_meja" style='display:none'>
         <table class="table table-borderless">
           <tbody id="item">
             <?php $i=0; #dd($data);
@@ -52,6 +52,7 @@
   ></script>
 
   <script>
+    document.getElementById('no_meja').setAttribute('value', val);
     function hapus(id_menu) {
       let url=`{{ env('URL') }}`;
       let ip=`{{ env('IP') }}`;
