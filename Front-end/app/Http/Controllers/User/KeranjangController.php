@@ -11,6 +11,18 @@ use GuzzleHttp\Client;
 
 class KeranjangController extends Controller
 {    
+    public function tampil_item(Request $request)
+    {
+        $client = new Client();
+        $meja = $request->session()->get('no_meja');
+        dd($meja);
+        $request = $client->get(env('URL').'/api/keranjang/'.$meja);
+        $response = json_decode($request->getBody()->getContents());
+        $data=$response->data;
+
+        return view('user.keranjang', ['data' => $data]);
+    }
+    
     /**
      * store
      *
@@ -33,21 +45,5 @@ class KeranjangController extends Controller
         $data=json_decode($response->getBody()->getContents())->message;
         
         return redirect()->route('katalog');
-    }
-        
-    /**
-     * show
-     *
-     * @param  mixed $post
-     * @return void
-     */
-    public function show($no_meja)
-    {
-        $client = new Client();
-        $request = $client->get(env('URL').'/api/keranjang/'.$no_meja);
-        $response = json_decode($request->getBody()->getContents());
-        $data=$response->data;
-
-        return view('user.keranjang', ['data' => $data]);
     }
 }

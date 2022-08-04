@@ -143,7 +143,7 @@
           </container>
         </div>
 
-          <form action="{{ route('feedback.store') }}" method="POST" enctype="multipart/form-data">
+          <form action="" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="col-12">
               <button type="button" onclick="printDiv('print')" class="btn btn-success">Cetak</button>

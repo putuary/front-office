@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Models\Pesanan;
-use App\Models\MenuDipesan;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PesananResource;
 use GuzzleHttp\Client;
 
 
 class PesananController extends Controller
 { 
+    public function index() {
+
+    }
     /**
      * store
      *
@@ -51,14 +52,16 @@ class PesananController extends Controller
          );
         }
         #dd($data);
-         
-         return view('user.rincian', ['data' => $data]);
+
+        return redirect('/pesanan/'.$data->id_pesanan);
     }
 
-    public function riwayat($no_meja)
+    public function riwayat(Request $request)
     {
         $client = new Client();
-        $request = $client->get(env('URL').'/api/pesanan/showpesananmeja/'.$no_meja);
+        $meja = $request->session()->get('no_meja');
+        dd($meja);
+        $request = $client->get(env('URL').'/api/pesanan/showpesananmeja/'.$meja);
         $response = json_decode($request->getBody()->getContents());
         #dd($response);
         $data=$response->data;

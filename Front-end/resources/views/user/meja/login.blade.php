@@ -23,7 +23,7 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                <form action="" method="POST">
+                <form action="/login" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="password">Password</label>

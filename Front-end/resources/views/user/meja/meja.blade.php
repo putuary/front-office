@@ -46,8 +46,17 @@
     crossorigin="anonymous"
   ></script>
   <script>
+    window.post = function(url, data) {
+        return fetch(url, {method: "POST", headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)});
+      }
     function setmeja(no_meja) {
       window.localStorage.setItem('no_meja', no_meja);
+      
+      post("{{ url('/save_meja') }}", 
+      {
+        meja: no_meja, 
+        _token : '{{ csrf_token() }}' 
+      });
       window.location.href = `{{ env('APP_URL') }}`;
     }
   </script>

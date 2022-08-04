@@ -38,8 +38,20 @@ Route::put('/admin/transaksi/{id_pesanan}', [AdminController::class, 'ubahStatus
 
 Route::get('/admin/riwayat', [AdminController::class, 'riwayat'])->name('RiwayatTransaksi')->middleware('auth');
 
+Route::get('/', [UserAuthController::class, 'index'])
+    ->name('user.home');
+Route::get('/login', [UserAuthController::class, 'login'])
+    ->name('user.login');
+Route::post('/login', [UserAuthController::class, 'handleLogin'])
+    ->name('user.handleLogin');
+Route::get('/logout', [UserAuthController::class, 'index'])
+    ->name('user.logout');
 
-Route::resource('/meja', MejaController::class);
+Route::get('/login', [LoginMejaController::class, 'index']);
+Route::post('/login', [LoginMejaController::class, 'store']);
+Route::post('/save_meja', [LoginMejaController::class, 'save_meja']);
+Route::get('/meja', [LoginMejaController::class, 'login_as'])->name('login_meja');
+
 Route::resource('/login', LoginMejaController::class);
 
 Route::get('/', [MenuController::class, 'index'])->name('katalog');
@@ -54,18 +66,14 @@ Route::get('/fasilitas', function () {
         return view('user.fasilitas');
 });
 
-Route::get('/riwayat/{no_meja}', [PesananController::class, 'riwayat']);
+Route::get('/pesanan/{id_pesanan}', [PesananController::class, 'index']);
+Route::post('/pesanan', [PesananController::class, 'store'])->name('pesanan.store');
+
+Route::get('/riwayat', [PesananController::class, 'riwayat']);
 
 Route::get('/feedback', [FeedbackController::class, 'index']);
 Route::get('/feedback/{id_pesanan}', [FeedbackController::class, 'tambah_feedback']);
-Route::post('/feedback', [FeedbackController::class, 'store']);
+Route::post('/tambah_feedback', [FeedbackController::class, 'store'])->name("feedback.store");
 
-Route::resource('/keranjang', KeranjangController::class);
-Route::delete('/keranjang',[KeranjangController::class, 'destroy']);
-
-
-
-//posts
-
-Route::get('/pesanan/showpesananmeja',[PesananController::class, 'showPesananMeja']);
-Route::resource('/pesanan', PesananController::class);
+Route::get('/keranjang', [KeranjangController::class, 'tampil_item']);
+Route::post('/tambah_keranjang', [KeranjangController::class, 'store'])->name("keranjang.store");

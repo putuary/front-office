@@ -15,10 +15,11 @@ class FeedbackController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index(Request $request)
     {
         $client = new Client();
-        $request = $client->get(env('URL').'/api/pesanan/showpesananmeja/2');
+        $meja = $request->session()->get('no_meja');
+        $request = $client->get(env('URL').'/api/pesanan/showpesananmeja/'.$meja);
         $response = json_decode($request->getBody()->getContents());
         #dd($response);
         $data=$response->data;

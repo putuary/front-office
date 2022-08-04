@@ -5,23 +5,14 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
-use \Config;
+use Illuminate\Support\Facades\Validator;
 
 
 class LoginMejaController extends Controller
 {    
-    /**
-     * index
-     *
-     * @return void
-     */
     public function index()
     {
-        $client = new Client();
-        $request = $client->get(env('URL').'/api/meja');
-        $response = json_decode($request->getBody()->getContents());
-        $data=$response->data;
-        return view('user.meja.meja', ['data' => $data]);
+        return view('user.meja.login');
     }
     
     /**
@@ -33,11 +24,30 @@ class LoginMejaController extends Controller
 
      public function store(Request $request)
     {
-       	
-        Config::set('global.no_meja', $request->no_meja);
-        dd(Config::get('global.no_meja'));
-        return redirect()->route('katalog');
+        // cek form validation
+        $validator = Validator::make($request->all(), [
+            'password'    => 'required',
+        ]);
+
+        // cek apakah email dan password benar
+        if ($request->password == env('PASSWORD')) {
+            return redirect()->route('login_meja');
+        }
+
+        // jika salah, kembali ke halaman login
+        return redirect()->back()->with('error', 'Password salah');
     }
-        
-   
+
+    public function login_as()
+    {
+        $client = new Client();
+        $request = $client->get(env('URL').'/api/meja');
+        $response = json_decode($request->getBody()->getContents());
+        $data=$response->data;
+        return view('user.meja.meja', ['data' => $data]);
+    }
+
+    public function save_meja(Request $request){
+        $request->session()->put('no_meja', $request['meja']);
+    }    
 }
