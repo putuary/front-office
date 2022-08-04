@@ -1,13 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MejaController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Admin\Login\LoginController;
+use App\Http\Controllers\Admin\Login\RegisterController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\User\MejaController;
+use App\Http\Controllers\User\LoginMejaController ;
 use App\Http\Controllers\User\MenuController;
-use App\Http\Controllers\KeranjangController;
-use App\Http\Controllers\PesananController;
-use App\Http\Controllers\Admin\TransaksiController;
-use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\User\KeranjangController;
+use App\Http\Controllers\User\PesananController;
+use App\Http\Controllers\User\FeedbackController;
 use GuzzleHttp\Client;
 
 /*
@@ -21,72 +23,49 @@ use GuzzleHttp\Client;
 |
 */
 
-Route::get('/admin/pesanan', function () {
-    $client = new Client();
-    $request = $client->get(env('URL') . '/api/pesanan/showstatus?status=di pesan');
-    $response = json_decode($request->getBody()->getContents());
-    $data = $response->data;
+Route::get('/admin', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/admin', [LoginController::class, 'authenticate']);
+Route::post('/admin/logout', [LoginController::class, 'logout']);
 
-    //return collection of posts as a resource
-    return view('admin.pesanan', ['data' => $data]);
-})->name('pesanan');
+Route::get('/admin/register', [RegisterController::class, 'index'])->middleware('guest');
+Route::post('/admin/register', [RegisterController::class, 'store']);
 
-Route::get('/admin/transaksi', [TransaksiController::class, 'index'])->name('Transaksi');
-Route::get('/admin/transaksi/{no_meja}', [TransaksiController::class, 'transaksiMeja'])->name('Transaksi.Meja');
-Route::put('/admin/transaksi/{id_pesanan}', [TransaksiController::class, 'ubahStatus'])->name('Transaksi.Status');
+Route::get('/admin/pesanan', [AdminController::class, 'pesanan'])->name('pesanan')->middleware('auth');
 
-Route::get('/admin/riwayat', function () {
-    $client = new Client();
-    $request = $client->get(env('URL') . '/api/riwayat_transaksi');
-    $response = json_decode($request->getBody()->getContents());
-    // dd($response->data);
-    $data = $response->data;
+Route::get('/admin/transaksi', [AdminController::class, 'transaksi'])->name('Transaksi')->middleware('auth');;
+Route::get('/admin/transaksi/{no_meja}', [AdminController::class, 'transaksi_meja'])->name('Transaksi.Meja')->middleware('auth');
+Route::put('/admin/transaksi/{id_pesanan}', [AdminController::class, 'ubahStatus'])->name('Transaksi.Status')->middleware('auth');
 
-    //return collection of posts as a resource
-    return view('admin.riwayat_transaksi', ['data' => $data]);
-})->name('RiwayatTransaksi');
+Route::get('/admin/riwayat', [AdminController::class, 'riwayat'])->name('RiwayatTransaksi')->middleware('auth');
+
+
+Route::resource('/meja', MejaController::class);
+Route::resource('/login', LoginMejaController::class);
 
 Route::get('/', [MenuController::class, 'index'])->name('katalog');
 Route::get('/promo', [MenuController::class, 'promo'])->name('promo');
 Route::get('/makanan', [MenuController::class, 'makanan'])->name('makanan');
 Route::get('/minuman', [MenuController::class, 'minuman'])->name('minuman');
 Route::get('/dessert', [MenuController::class, 'dessert'])->name('dessert');
-
-Route::resource('/meja', MejaController::class);
-Route::resource('/login', LoginController::class);
+Route::get('/detail/{id_menu}', [MenuController::class, 'detail']);
 
 
 Route::get('/fasilitas', function () {
-    return view('user.fasilitas');
+        return view('user.fasilitas');
 });
 
-Route::get('/riwayat', function () {
-    $client = new Client();
-    $request = $client->get(env('URL') . '/api/pesanan/showpesananmeja/2');
-    $response = json_decode($request->getBody()->getContents());
-    #dd($response);
-    $data = $response->data;
-    return view('user.riwayat', ['data' => $data]);
-});
+Route::get('/riwayat/{no_meja}', [PesananController::class, 'riwayat']);
 
-Route::get('/detail', function () {
-    $id_menu = $_GET['id_menu'];
-    $client = new Client();
-    $request = $client->get(env('URL') . '/api/menu/' . $id_menu);
-    $response = json_decode($request->getBody()->getContents());
-    $data = $response->data;
-    return view('user.detail', ['data' => $data]);
-});
-
-
-Route::resource('/feedback', FeedbackController::class);
+Route::get('/feedback', [FeedbackController::class, 'index']);
+Route::get('/feedback/{id_pesanan}', [FeedbackController::class, 'tambah_feedback']);
+Route::post('/feedback', [FeedbackController::class, 'store']);
 
 Route::resource('/keranjang', KeranjangController::class);
-Route::delete('/keranjang', [KeranjangController::class, 'destroy']);
+Route::delete('/keranjang',[KeranjangController::class, 'destroy']);
 
 
 
 //posts
 
-Route::get('/pesanan/showpesananmeja', [PesananController::class, 'showPesananMeja']);
+Route::get('/pesanan/showpesananmeja',[PesananController::class, 'showPesananMeja']);
 Route::resource('/pesanan', PesananController::class);

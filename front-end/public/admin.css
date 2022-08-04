@@ -38,7 +38,7 @@ body:before {
 .nav-item {
     margin-right: 50px;
     padding-right: 50px;
-    padding-left: 200px;
+    padding-left: 100px;
 }
 .container-fluid {
     margin-left: 50px;
@@ -54,9 +54,25 @@ body:before {
 .fm {
     padding-top: 100px;
 }
-.btn {
+.btnn {
     margin-left: 800px;
 }
 .dropdown {
     margin-left: 20px;
+}
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }

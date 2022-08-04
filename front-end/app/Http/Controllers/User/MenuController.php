@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
+use Config;
 
 class MenuController extends Controller
 {    
@@ -21,7 +22,9 @@ class MenuController extends Controller
         $data=$response->data;
 
         //return collection of posts as a resource
-        return view('user.katalog', ['data' => $data]);   
+        return view('user.katalog', ['data' => $data,
+        'no_meja' =>  (!isset($no_meja)) ? Config::get('global.no_meja') : $no_meja,    
+                    ]);   
     }
 
     public function promo() {
@@ -58,5 +61,14 @@ class MenuController extends Controller
         $response = json_decode($request->getBody()->getContents());
         $data=$response->data;
         return view('user.katalog', ['data' => $data]);
+    }
+
+    public function detail($id_menu)
+    {
+        $client = new Client();
+        $request = $client->get(env('URL').'/api/menu/'.$id_menu);
+        $response = json_decode($request->getBody()->getContents());
+        $data=$response->data;
+        return view('user.detail', ['data' => $data]);
     }
 }
