@@ -20,7 +20,8 @@
                 <div class="bg">
                     <form action="/feedback" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <input type="text" name="id_pesanan" style="display: none" value="{{ $id_pesanan }}">
+                        <input type="text" name="id_pesanan" hidden value="{{ $data->id_pesanan }}">
+                        <input type="number" name="no_meja" hidden value="{{ $data->no_meja }}">
                         <div class=" tombol mb-4">
                             <label for="isi_feedback" class="form-label">Berikan Penilaian Anda : </label> <br>
                             <textarea name="isi_feedback" id="isi_feedback" cols="100" rows="10"></textarea>

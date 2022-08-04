@@ -65,6 +65,7 @@
 
     function kembalian(total_harga) {
       let bayar = document.getElementById('bayar').value;
+      document.getElementById("uang_bayar").value = bayar;
       document.getElementById('kembalian').innerHTML = formatRupiah(bayar - total_harga);
     }
 
@@ -143,15 +144,17 @@
           </container>
         </div>
 
-          <form action="" method="POST" enctype="multipart/form-data">
+          <form action="/admin/transaksi" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="col-12">
-              <button type="button" onclick="printDiv('print')" class="btn btn-success">Cetak</button>
+              <input type="number" class="form-control" id="id_pesanan" hidden name="id_pesanan" value=${pesanan.id_pesanan}>
+              <input type="number" class="form-control" id="uang_bayar" hidden name="uang_bayar">
+              <button type="submit" class="btn btn-success">Cetak</button>
             </div>
           </form>`;
 
       document.getElementById("konten").innerHTML = text;
-
+      
     }
   </script>
 </body>

@@ -38,7 +38,7 @@ body:before {
 .nav-item {
     margin-right: 50px;
     padding-right: 50px;
-    padding-left: 200px;
+    padding-left: 100px;
 }
 .container-fluid {
     margin-left: 50px;
@@ -54,7 +54,7 @@ body:before {
 .fm {
     padding-top: 100px;
 }
-.btn {
+.btnn {
     margin-left: 800px;
 }
 .dropdown {

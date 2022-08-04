@@ -34,7 +34,7 @@
                 </p>
             </li>
             </ul>
-            <a href="/feedback/{{ $item->id_pesanan }}" class="btn btn-success btn-sm">Berikan Feedback Anda</a>
+            <a href="/feedback_pesanan/{{ $item->id_pesanan }}" class="btn btn-success btn-sm">Berikan Feedback Anda</a>
         </div>
         </div>
         @endforeach

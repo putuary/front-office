@@ -24,16 +24,16 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="/keranjang" class="nav-link" tabindex="-1" aria-disabled="true" >Keranjang</a>
+                        <a id="keranjang_meja" class="nav-link" tabindex="-1" aria-disabled="true" >Keranjang</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/riwayat" class="nav-link" tabindex="-1" aria-disabled="true" >Riwayat</a>
+                        <a id="riwayat_meja" class="nav-link" tabindex="-1" aria-disabled="true">Riwayat</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/fasilitas" tabindex="-1" aria-disabled="true">Fasilitas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/feedback" tabindex="-1" aria-disabled="true" >Feedback</a>
+                        <a id="feedback_meja" class="nav-link" tabindex="-1" aria-disabled="true">Feedback</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/login" tabindex="-1" aria-disabled="true"><span class="iconify" data-icon="ic:baseline-table-restaurant" style="color: #699bf7;"></span> Meja <span id="meja"></span></div> </a>
@@ -44,6 +44,9 @@
     </nav>
     <script> 
         let meja=window.localStorage.getItem('no_meja');
+        document.getElementById('keranjang_meja').setAttribute('href', `/keranjang/${meja}`);
+        document.getElementById('riwayat_meja').setAttribute('href', `/riwayat/${meja}`);
+        document.getElementById('feedback_meja').setAttribute('href', `/feedback/${meja}`);
         document.getElementById("meja").innerHTML=meja;
     </script>
 </header>

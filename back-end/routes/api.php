@@ -19,6 +19,7 @@ Route::get('/pesanan/showstatus',[PesananController::class, 'showstatus']);
 Route::get('/pesanan/showpesananmeja/{no_meja}',[PesananController::class, 'showPesananMeja']);
 Route::get('/pesanan/daftarmeja',[PesananController::class, 'daftarMeja']);
 Route::apiResource('/pesanan', PesananController::class);
+Route::get('/riwayat',[RiwayatTransaksiController::class, 'riwayat']);
 Route::apiResource('/riwayat_transaksi', RiwayatTransaksiController::class);
 // Route::get('/feedback/belum_isi/{no_meja}', [FeedbackController::class, 'belum_isi']);
 Route::apiResource('/feedback', FeedbackController::class);

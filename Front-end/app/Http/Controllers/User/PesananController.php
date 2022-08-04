@@ -10,8 +10,13 @@ use GuzzleHttp\Client;
 
 class PesananController extends Controller
 { 
-    public function index() {
-
+    public function show($id_pesanan) {
+        $client = new Client();
+        $request = $client->get(env('URL').'/api/pesanan/'.$id_pesanan);
+        $response = json_decode($request->getBody()->getContents());
+        #dd($response);
+        $data=$response->data;
+        return view('user.rincian', ['data' => $data]);
     }
     /**
      * store
@@ -56,12 +61,10 @@ class PesananController extends Controller
         return redirect('/pesanan/'.$data->id_pesanan);
     }
 
-    public function riwayat(Request $request)
+    public function riwayat($no_meja)
     {
         $client = new Client();
-        $meja = $request->session()->get('no_meja');
-        dd($meja);
-        $request = $client->get(env('URL').'/api/pesanan/showpesananmeja/'.$meja);
+        $request = $client->get(env('URL').'/api/pesanan/showpesananmeja/'.$no_meja);
         $response = json_decode($request->getBody()->getContents());
         #dd($response);
         $data=$response->data;

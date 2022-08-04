@@ -11,12 +11,10 @@ use GuzzleHttp\Client;
 
 class KeranjangController extends Controller
 {    
-    public function tampil_item(Request $request)
+    public function tampil_item($no_meja)
     {
         $client = new Client();
-        $meja = $request->session()->get('no_meja');
-        dd($meja);
-        $request = $client->get(env('URL').'/api/keranjang/'.$meja);
+        $request = $client->get(env('URL').'/api/keranjang/'.$no_meja);
         $response = json_decode($request->getBody()->getContents());
         $data=$response->data;
 

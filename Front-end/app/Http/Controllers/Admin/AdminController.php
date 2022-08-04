@@ -24,7 +24,7 @@ class AdminController extends Controller
     public function riwayat()
     {
         $client = new Client();
-        $request = $client->get(env('URL').'/api/riwayat_transaksi');
+        $request = $client->get(env('URL').'/api/riwayat');
         $response = json_decode($request->getBody()->getContents());
         // dd($response->data);
         $data=$response->data;
@@ -53,4 +53,18 @@ class AdminController extends Controller
         return view('admin.transaksi.transaksi_meja', ['data' => $data]);
     }
 
+    public function ubahStatus(Request $request)
+    {
+        $client = new Client();
+        $response=$client->request('PUT',env('URL').'/api/riwayat_transaksi/'.$request->id_pesanan,
+             array(
+                 'form_params' => array(
+                    'uang_bayar' => $request->uang_bayar,
+                 )
+             )
+         );
+         $data = json_decode($response->getBody()->getContents());
+
+         return redirect()->back();
+    }
 }

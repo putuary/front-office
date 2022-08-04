@@ -51,12 +51,6 @@
       }
     function setmeja(no_meja) {
       window.localStorage.setItem('no_meja', no_meja);
-      
-      post("{{ url('/save_meja') }}", 
-      {
-        meja: no_meja, 
-        _token : '{{ csrf_token() }}' 
-      });
       window.location.href = `{{ env('APP_URL') }}`;
     }
   </script>
