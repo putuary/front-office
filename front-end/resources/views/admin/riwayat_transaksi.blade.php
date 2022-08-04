@@ -45,7 +45,7 @@
           </div>
           <div class="col-3" style="margin-top: 100px;">
             <div class="card border-0">
-              <div class="card-body" style="background-color: #2DB22A;">
+              <div class="card-body" style="background-color: #2DB22A; color: #d9d9d9;">
                 {{ $item->status_transaksi }}
               </div>
             </div>
