@@ -86,9 +86,12 @@ class RiwayatTransaksiController extends Controller
         ]);
     }
 
-    public function update($id_pesanan)
+    public function update($id_pesanan, Request $request)
     {
+        $pesanan= Pesanan::where('id_pesanan', $id_pesanan)->get();
         $transaksi=RiwayatTransaksi::where('id_pesanan', $id_pesanan)
-        ->update(['status_transaksi' => 'Lunas']);
+        ->update(['uang_bayar' => $request->uang_bayar,
+                'uang_kembalian' => $request->uang_bayar - $pesanan[0]->total_harga,
+                'status_transaksi' => 'Lunas']);
     }
 }

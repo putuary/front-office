@@ -6,6 +6,7 @@ use App\Models\Feedback;
 use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\PesananController;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -19,7 +20,7 @@ class FeedbackController extends Controller
     public function index()
     {
         //get posts
-        $feedback = Feedback::latest()->paginate(5);
+        $feedback = Feedback::get();
 
         //return collection of posts as a resource
         return response()->json([
@@ -76,4 +77,18 @@ class FeedbackController extends Controller
             'data'    => $feedback,
         ]);
     }
+    
+    // public function belum_isi($no_meja)
+    // {
+    //     $pesanan=new PesananController();
+    //     $f_pesanan=$pesanan->pesanan_feedback($no_meja);
+    //     $feedback=Feedback::get();
+
+    //     $data=array();
+    //     for()
+    //     if($f_pesanan->id_pesanan)
+
+    //     dd($pesanan->pesanan_feedback($no_meja));
+
+    // }
 }
