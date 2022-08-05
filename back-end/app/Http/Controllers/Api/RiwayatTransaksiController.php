@@ -24,6 +24,8 @@ class RiwayatTransaksiController extends Controller
         }
         $array['total_harga']=$result[0]->total_harga;
         $array['waktu_pesan']=$result[0]->waktu_pesan;
+        $array['uang_bayar']=$result[0]->uang_bayar;
+        $array['uang_kembalian']=$result[0]->uang_kembalian;
         $array['status_transaksi']=$result[0]->status_transaksi;
        
         return $array;
@@ -69,7 +71,7 @@ class RiwayatTransaksiController extends Controller
         $transaksi = RiwayatTransaksi::join('pesanan', 'riwayat_transaksi.id_pesanan', '=', 'pesanan.id_pesanan')
                     ->join('menu_dipesan', 'pesanan.id_pesanan', '=', 'menu_dipesan.id_pesanan')
                     ->join('menu', 'menu_dipesan.id_menu', '=', 'menu.id_menu')
-                    ->select('menu_dipesan.id_pesanan','no_meja','nama_menu','harga_jual','jumlah','harga_peritem', 'total_harga','waktu_pesan', 'status_transaksi')
+                    ->select('menu_dipesan.id_pesanan','no_meja','nama_menu','harga_jual','jumlah','harga_peritem', 'total_harga','waktu_pesan','uang_bayar', 'uang_kembalian', 'status_transaksi')
                     ->where('menu_dipesan.id_pesanan', $id_pesanan)->get();
 
         if(count($transaksi)==0) {

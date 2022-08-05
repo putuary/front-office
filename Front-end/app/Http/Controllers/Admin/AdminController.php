@@ -67,4 +67,15 @@ class AdminController extends Controller
 
          return redirect()->back();
     }
+
+    public function cetak_struk($id_pesanan) {
+        $client = new Client();
+        $request = $client->get(env('URL').'/api/riwayat_transaksi/'.$id_pesanan);
+        $response = json_decode($request->getBody()->getContents());
+        #dd($response->data);
+        $data=$response->data;
+
+        //return collection of posts as a resource
+        return view('admin.transaksi.struk', ['data' => $data]);
+    }
 }

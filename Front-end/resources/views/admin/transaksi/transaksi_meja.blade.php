@@ -44,13 +44,22 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script>
-    function printDiv(divName) {
-     var printContents = document.getElementById(divName).innerHTML;
-     var originalContents = document.body.innerHTML;
-     document.body.innerHTML = printContents;
-     window.print();
-     document.body.innerHTML = originalContents;
-  }
+    window.post = function(url, data) {
+        return fetch(url, {method: "POST", headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)});
+      }
+
+    function cetak(id_pesanan, bayar) {
+      let uri=`{{ url('/admin/struk/') }}`;
+      post("{{ url('/admin/transaksi') }}", 
+      {
+        id_pesanan: id_pesanan,
+        uang_bayar: bayar,
+        _token : '{{ csrf_token() }}' 
+      });
+      setInterval(() => {
+        window.open(`${uri}/${id_pesanan}`);
+      }, 2000);
+    }
     
     const formatRupiah = (money) => {
       return new Intl.NumberFormat('id-ID', {
@@ -59,10 +68,10 @@
         minimumFractionDigits: 0
       }).format(money);
     }
-    function kembalian(total_harga) {
+    function kembalian(id_pesanan, total_harga) {
       let bayar = document.getElementById('bayar').value;
-      document.getElementById("uang_bayar").value = bayar;
       document.getElementById('kembalian').innerHTML = formatRupiah(bayar - total_harga);
+      document.getElementById("button_cetak").setAttribute('onclick', `cetak(${id_pesanan}, ${bayar})`);
     }
     getPesanan(0);
     function getPesanan(item) {
@@ -127,25 +136,21 @@
             <tbody>
               <tr>
                 <th scope="row">${formatRupiah(pesanan.total_harga)}</th>
-                
-                <td><input type="number" class="form-control" id="bayar" min=${pesanan.total_harga} name="bayar" onkeyup="kembalian(${pesanan.total_harga})"></td>
+                <td id="td_number"><input type="number" class="form-control" id="bayar" min=${pesanan.total_harga} name="bayar" onkeyup="kembalian(${pesanan.id_pesanan},${pesanan.total_harga})"></td>
                 <td id="kembalian"></td>
               </tr>
             </tbody>
           </table>
           </container>
         </div>
-          <form action="/admin/transaksi" method="POST" enctype="multipart/form-data">
-            @csrf
+          
             <div class="col-12">
-              <input type="number" class="form-control" id="id_pesanan" hidden name="id_pesanan" value=${pesanan.id_pesanan}>
-              <input type="number" class="form-control" id="uang_bayar" hidden name="uang_bayar">
-              <button type="submit" class="btn btn-success">Cetak</button>
-            </div>
-          </form>`;
+              <button type="button" id="button_cetak" class="btn btn-success">Cetak</button>
+            </div>`;
       document.getElementById("konten").innerHTML = text;
       
     }
+
   </script>
 </body>
 
