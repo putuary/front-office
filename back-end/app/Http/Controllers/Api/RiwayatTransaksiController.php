@@ -6,7 +6,7 @@ use App\Models\RiwayatTransaksi;
 use App\Models\Pesanan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use PhpParser\Node\Expr\FuncCall;
 
 class RiwayatTransaksiController extends Controller
 {  
@@ -93,5 +93,25 @@ class RiwayatTransaksiController extends Controller
         ->update(['uang_bayar' => $request->uang_bayar,
                 'uang_kembalian' => $request->uang_bayar - $pesanan[0]->total_harga,
                 'status_transaksi' => 'Lunas']);
+        
+        return response()->json([
+            'message' => 'Data berhasil Diubah',
+       ]);
+    }
+
+    public function riwayat() {
+        $transaksi = RiwayatTransaksi::where('status_transaksi','Lunas')->get();
+
+        #dd($transaksi[0]->id_pesanan);
+
+        $data=array();
+        for($i=0;$i<count($transaksi);$i++) {
+            array_push($data, $this->show($transaksi[$i]->id_pesanan)->getData()->data);
+        }
+        //return collection of posts as a resource
+        return response()->json([
+            'message' => 'List daftar Riwayat Transaksi',
+            'data'    => $data,
+        ]);
     }
 }
