@@ -13,8 +13,7 @@
 
 <body>
   <div class="row justify-content-center">
-
-    <div class="col-md-4" style="margin-top: 200px;">
+    <div class="col-md-4" style="margin-top: 150px;">
       <div class="alert alert-success alert-dismissible fade show" role="alert">
         @if(session()->has('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">

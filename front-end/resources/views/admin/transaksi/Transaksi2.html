@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Transaksi2</title>
+    <title>Transaksi1</title>
     <script
       src="https://kit.fontawesome.com/387f5a3e4e.js"
       crossorigin="anonymous"
@@ -24,6 +24,7 @@
         justify-content: center;
         align-items: center;
         margin-top: 20px;
+        margin-left: 60px;
       }
     </style>
   </head>
@@ -31,7 +32,7 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Restourant Randu</a>
+          <a class="navbar-brand" href="#">Restoran Randu</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -75,29 +76,29 @@
       <div class="container">
         <div class="row">
           <div class="col-3">
-            <div class="box">Id Pesanan: 12345678A</div>
+            <div class="box">Id Pesanan:123</div>
           </div>
           <div class="row">
             <div class="col-3">
-             <div class="box">Transaksi 1</div>
+              <div class="box">Transaksi 1</div>
+            </div>
           </div>
-      </div>
       <container style="margin-top: 30px;">
       <table class="table" style="background-color:#d9d9d9;">
         <thead>
           <tr>
             <th scope="col">Nama Produk</th>
-            <th scope="col">Harga Satuan</th>
+            <th scope="col">Harga Per-Item</th>
             <th scope="col">Jumlah</th>
             <th scope="col">Harga</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">1. Boba </br> 2.Nasi Goreng </th>
-            <td>1. Rp. 12.000 </br> 2. Rp. 16.000</td>
-            <td>1 </br> 1</td>
-            <td>Rp.38.000</td>
+            <th scope="row">Ayam Goreng</th>
+            <td>Rp. 15.000</td>
+            <td>2</td>
+            <td>Rp. 30.000</td>
           </tr>
         </tbody>
       </table>
@@ -111,20 +112,20 @@
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Rp. 38.000</th>
-            <td>Rp. 50.000</td>
-            <td>Rp. 12.000</td>
+            <th scope="row">Rp. 30.000</th>
+            <td><input type="number" class="form-control" id="bayar" min=${pesanan.total_harga} name="bayar" onkeyup="kembalian Rp. 20.000"></td>
+            <td id="kembalian"></td>
           </tr>
         </tbody>
       </table>
-      </container>
-
-      <div class="col-12">
-        <button type="submit" class="btn btn-success">Cetak</button>
-      </div>
-    </div>
+    </container>
     
-  </body>
+    <form action="{{ route('feedback.store') }}" method="POST" enctype="multipart/form-data">
+      <div class="col-12">
+        <button type="submit" class="btn btn-success" >Cetak</button>
+      </div>
+    </form>`;
+
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

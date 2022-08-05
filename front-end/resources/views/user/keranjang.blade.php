@@ -52,17 +52,16 @@
   ></script>
 
   <script>
-    document.getElementById('no_meja').setAttribute('value', val);
+    document.getElementById('no_meja').setAttribute('value', meja);
     function hapus(id_menu) {
       let url=`{{ env('URL') }}`;
       let ip=`{{ env('IP') }}`;
-      let no_meja=document.getElementById("no_meja").value;
 
       var xhr = new XMLHttpRequest();
       xhr.open("DELETE", `${url}/api/keranjang`, true);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send(JSON.stringify({
-        no_meja: no_meja, 
+        no_meja: meja, 
         id_menu: id_menu
       }));
       xhr.onload = function() {

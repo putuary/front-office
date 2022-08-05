@@ -15,7 +15,7 @@
       integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href={{ URL::asset('style.css')}} />
   </head>
   <body>
     @include('layouts.navbar')
@@ -34,7 +34,7 @@
                 </p>
             </li>
             </ul>
-            <a href="/feedback/{{ $item->id_pesanan }}" class="btn btn-success btn-sm">Berikan Feedback Anda</a>
+            <a href="/feedback_pesanan/{{ $item->id_pesanan }}" class="btn btn-success btn-sm">Berikan Feedback Anda</a>
         </div>
         </div>
         @endforeach

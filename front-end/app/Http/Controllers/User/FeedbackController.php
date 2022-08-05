@@ -15,10 +15,10 @@ class FeedbackController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index($no_meja)
     {
         $client = new Client();
-        $request = $client->get(env('URL').'/api/pesanan/showpesananmeja/2');
+        $request = $client->get(env('URL').'/api/pesanan/showpesananmeja/'.$no_meja);
         $response = json_decode($request->getBody()->getContents());
         #dd($response);
         $data=$response->data;
@@ -45,11 +45,16 @@ class FeedbackController extends Controller
             );
         $data=json_decode($response->getBody()->getContents())->message;
         
-        return redirect('/feedback');
+        return redirect('/feedback/'.$request->no_meja);
     }
 
     public function tambah_feedback($id_pesanan)
     {
-        return view('user.feedback.feedback_pesanan', ['id_pesanan' => $id_pesanan]);
+        $client = new Client();
+        $request = $client->get(env('URL').'/api/pesanan/'.$id_pesanan);
+        $response = json_decode($request->getBody()->getContents());
+        #dd($response);
+        $data=$response->data;
+        return view('user.feedback.feedback_pesanan', ['data' => $data]);
     }
 }
