@@ -35,8 +35,10 @@ Route::get('/admin/pesanan', [AdminController::class, 'pesanan'])->name('pesanan
 Route::get('/admin/transaksi', [AdminController::class, 'transaksi'])->name('Transaksi')->middleware('auth');;
 Route::get('/admin/transaksi/{no_meja}', [AdminController::class, 'transaksi_meja'])->name('Transaksi.Meja')->middleware('auth');
 Route::post('/admin/transaksi', [AdminController::class, 'ubahStatus'])->name('Transaksi.Status')->middleware('auth');
+Route::get('/admin/struk/{id_pesanan}', [AdminController::class, 'cetak_struk'])->name('cetak_struk')->middleware('auth');
 
 Route::get('/admin/riwayat', [AdminController::class, 'riwayat'])->name('RiwayatTransaksi')->middleware('auth');
+
 
 Route::get('/login', [LoginMejaController::class, 'index']);
 Route::post('/login', [LoginMejaController::class, 'store']);

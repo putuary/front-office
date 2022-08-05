@@ -29,7 +29,7 @@
         </div>
         @endif
 
-        <main class="form-signin">
+        <main class="form-signin ms-4">
           <h1 class="h3 mb-3 fw-normal text-center">Please login</h1>
           <form action="/admin" method="post">
             @csrf
@@ -49,7 +49,7 @@
 
             <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
           </form>
-          <small class="d-block text-center mt-3">Not registered? <a href="/admin/register">Register Now!</a></small>
+
         </main>
       </div>
     </div>
