@@ -65,7 +65,6 @@
 
     function kembalian(total_harga) {
       let bayar = document.getElementById('bayar').value;
-      document.getElementById("uang_bayar").value = bayar;
       document.getElementById('kembalian').innerHTML = formatRupiah(bayar - total_harga);
     }
 
@@ -136,7 +135,9 @@
               <tr>
                 <th scope="row">${formatRupiah(pesanan.total_harga)}</th>
                 
-                <td><input type="number" class="form-control" id="bayar" min=${pesanan.total_harga} name="bayar" onkeyup="kembalian(${pesanan.total_harga})"></td>
+                <form action="/admin/transaksi" method="POST" enctype="multipart/form-data">
+                  @csrf
+                <td><input type="number" class="form-control" id="bayar" min=${pesanan.total_harga} name="uang_bayar" onkeyup="kembalian(${pesanan.total_harga}) required"></td>
                 <td id="kembalian"></td>
               </tr>
             </tbody>
@@ -144,11 +145,8 @@
           </container>
         </div>
 
-          <form action="/admin/transaksi" method="POST" enctype="multipart/form-data">
-            @csrf
             <div class="col-12">
               <input type="number" class="form-control" id="id_pesanan" hidden name="id_pesanan" value=${pesanan.id_pesanan}>
-              <input type="number" class="form-control" id="uang_bayar" hidden name="uang_bayar">
               <button type="submit" class="btn btn-success">Cetak</button>
             </div>
           </form>`;

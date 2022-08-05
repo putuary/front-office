@@ -24,7 +24,7 @@
                         <input type="number" name="no_meja" hidden value="{{ $data->no_meja }}">
                         <div class=" tombol mb-4">
                             <label for="isi_feedback" class="form-label">Berikan Penilaian Anda : </label> <br>
-                            <textarea name="isi_feedback" id="isi_feedback" cols="100" rows="10"></textarea>
+                            <textarea name="isi_feedback" id="isi_feedback" cols="100" rows="10" required></textarea>
                             <div class="tomb"><button class="btn btn-success" style="float: end;">Submit</button></div>
                         </div>
                     </form>
