@@ -8,20 +8,22 @@
     <title>Feedback</title>
     <script src="https://kit.fontawesome.com/387f5a3e4e.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('style.css')}}">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
     @include('layouts.navbar')
-
+    @if ($data['success'])
+    <div class="alert alert-success">
+        {{ $data['message'] }}
+    </div>
+    @endif
     <div class="body-content">
         <div class="container">
             <div class="box">
                 <div class="bg">
-                    <form action="/feedback" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('feedback.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <input type="text" name="id_pesanan" hidden value="{{ $data->id_pesanan }}">
-                        <input type="number" name="no_meja" hidden value="{{ $data->no_meja }}">
                         <div class=" tombol mb-4">
                             <label for="isi_feedback" class="form-label">Berikan Penilaian Anda : </label> <br>
                             <textarea name="isi_feedback" id="isi_feedback" cols="100" rows="10"></textarea>

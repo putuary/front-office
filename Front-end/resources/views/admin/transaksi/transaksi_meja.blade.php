@@ -47,11 +47,8 @@
     function printDiv(divName) {
      var printContents = document.getElementById(divName).innerHTML;
      var originalContents = document.body.innerHTML;
-
      document.body.innerHTML = printContents;
-
      window.print();
-
      document.body.innerHTML = originalContents;
   }
     
@@ -62,19 +59,16 @@
         minimumFractionDigits: 0
       }).format(money);
     }
-
     function kembalian(total_harga) {
       let bayar = document.getElementById('bayar').value;
+      document.getElementById("uang_bayar").value = bayar;
       document.getElementById('kembalian').innerHTML = formatRupiah(bayar - total_harga);
     }
-
     getPesanan(0);
-
     function getPesanan(item) {
       let data = <?php echo json_encode($data); ?>;
       console.log(data[item]);
       let pesanan = data[item];
-
       let text = `
         <div id="print">
           <div class="container">
@@ -118,7 +112,6 @@
       pesanan.menu_dipesan.forEach(element => {
         text += `${formatRupiah(element.harga_peritem)} </br>`
       });
-
       text += `   </td>
               </tr>
             </tbody>
@@ -135,22 +128,21 @@
               <tr>
                 <th scope="row">${formatRupiah(pesanan.total_harga)}</th>
                 
-                <form action="/admin/transaksi" method="POST" enctype="multipart/form-data">
-                  @csrf
-                <td><input type="number" class="form-control" id="bayar" min=${pesanan.total_harga} name="uang_bayar" onkeyup="kembalian(${pesanan.total_harga}) required"></td>
+                <td><input type="number" class="form-control" id="bayar" min=${pesanan.total_harga} name="bayar" onkeyup="kembalian(${pesanan.total_harga})"></td>
                 <td id="kembalian"></td>
               </tr>
             </tbody>
           </table>
           </container>
         </div>
-
+          <form action="/admin/transaksi" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="col-12">
               <input type="number" class="form-control" id="id_pesanan" hidden name="id_pesanan" value=${pesanan.id_pesanan}>
+              <input type="number" class="form-control" id="uang_bayar" hidden name="uang_bayar">
               <button type="submit" class="btn btn-success">Cetak</button>
             </div>
           </form>`;
-
       document.getElementById("konten").innerHTML = text;
       
     }
